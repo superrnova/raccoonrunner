@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(base64 -i /private/tmp/claude-501/-Users-jennynova-Projects-raccoonrunner/36fce783-9fcb-4bc9-8343-f3a619dbe5f7/scratchpad/assets/bg.png -o /private/tmp/claude-501/-Users-jennynova-Projects-raccoonrunner/36fce783-9fcb-4bc9-8343-f3a619dbe5f7/scratchpad/assets/bg.b64)",
+      "Bash(base64 -i /private/tmp/claude-501/-Users-jennynova-Projects-raccoonrunner/36fce783-9fcb-4bc9-8343-f3a619dbe5f7/scratchpad/assets/standard.png -o /private/tmp/claude-501/-Users-jennynova-Projects-raccoonrunner/36fce783-9fcb-4bc9-8343-f3a619dbe5f7/scratchpad/assets/standard.b64)",
+      "Bash(base64 -i /private/tmp/claude-501/-Users-jennynova-Projects-raccoonrunner/36fce783-9fcb-4bc9-8343-f3a619dbe5f7/scratchpad/assets/heart.png -o /private/tmp/claude-501/-Users-jennynova-Projects-raccoonrunner/36fce783-9fcb-4bc9-8343-f3a619dbe5f7/scratchpad/assets/heart.b64)",
+      "Bash(base64 -i /private/tmp/claude-501/-Users-jennynova-Projects-raccoonrunner/36fce783-9fcb-4bc9-8343-f3a619dbe5f7/scratchpad/assets/sad.png -o /private/tmp/claude-501/-Users-jennynova-Projects-raccoonrunner/36fce783-9fcb-4bc9-8343-f3a619dbe5f7/scratchpad/assets/sad.b64)",
+      "Bash(python3 -c \"print\\('ok'\\)\")",
+      "Bash(open *)",
+      "Bash(node -e ' *)",
+      "Bash(python3 -c ' *)"
+    ]
+  }
+}
