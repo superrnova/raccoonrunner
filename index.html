@@ -699,7 +699,7 @@
     ctx.font = promptFontSize + "px 'Geist', sans-serif";
     ctx.fillStyle = "rgba(255,255,255,0.85)";
     var infoY = promptY + 28;
-    var infoLineSpacing = isMobileViewport() ? 21 : 16;
+    var infoLineSpacing = 21;
     ctx.fillText("🍝 Catch plates with food. Miss one & lose a life.", CANVAS_W / 2, infoY);
     ctx.fillText("⬜ Ignore empty plates.", CANVAS_W / 2, infoY + infoLineSpacing);
     ctx.fillText("❌ Avoid the stinky trash can. Hit it & lose a life.", CANVAS_W / 2, infoY + infoLineSpacing * 2);
