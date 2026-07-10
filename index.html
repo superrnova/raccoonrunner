@@ -148,7 +148,12 @@
   var CANVAS_W = canvas.width;
   var CANVAS_H = canvas.height;
 
-  var DPR = window.devicePixelRatio || 1;
+  var DPR = Math.min(window.devicePixelRatio || 1, 2); // cap at 2x so a heavier
+                                                         // canvas backing store
+                                                         // doesn't make frame drops
+                                                         // more likely under CPU
+                                                         // throttling (low battery,
+                                                         // thermal limits, mobile)
   if (DPR !== 1) {
     canvas.width = CANVAS_W * DPR;
     canvas.height = CANVAS_H * DPR;
@@ -444,17 +449,22 @@
   // Update loop
   // ---------------------------------------------------------------------
   var lastTime = null;
+  var FRAME_MS = 1000 / 60; // speeds below are tuned as px-per-frame at 60fps;
+                             // dividing dt by this normalizes motion to real
+                             // elapsed time so a slow/uneven frame rate doesn't
+                             // change how fast things actually move on screen
 
   function update(dt) {
     if (gameState !== STATE.PLAYING) return;
 
+    var timeScale = dt / FRAME_MS;
     elapsedMs += dt;
     var elapsedSeconds = elapsedMs / 1000;
     var difficulty = getDifficulty(elapsedSeconds);
 
     // continuous movement while key held
-    if (player.leftHeld) player.x -= player.speed;
-    if (player.rightHeld) player.x += player.speed;
+    if (player.leftHeld) player.x -= player.speed * timeScale;
+    if (player.rightHeld) player.x += player.speed * timeScale;
     clampPlayer();
 
     // expression flash timer
@@ -489,7 +499,7 @@
       var plate = plates[i];
 
       if (!plate.missed) {
-        plate.y += difficulty.fallSpeed;
+        plate.y += difficulty.fallSpeed * timeScale;
 
         if (checkCatch(plate)) {
           // caught on contact — remove immediately, don't let it fall through Rowdy
@@ -502,7 +512,7 @@
         }
       } else {
         // missed plates keep falling past the bin, then get removed below
-        plate.y += difficulty.fallSpeed * 2;
+        plate.y += difficulty.fallSpeed * 2 * timeScale;
       }
 
       if (plate.y - plate.radius > CANVAS_H) {
@@ -517,7 +527,7 @@
     // "missed" bookkeeping and no effect on totalPlates/caughtPlates
     for (var h = hazards.length - 1; h >= 0; h--) {
       var hazard = hazards[h];
-      hazard.y += difficulty.fallSpeed;
+      hazard.y += difficulty.fallSpeed * timeScale;
 
       if (checkCatch(hazard)) {
         onHazardCatch(hazard);
@@ -776,7 +786,9 @@
   // ---------------------------------------------------------------------
   function loop(timestamp) {
     if (lastTime === null) lastTime = timestamp;
-    var dt = timestamp - lastTime;
+    var dt = Math.min(timestamp - lastTime, 100); // cap so a stalled/backgrounded
+                                                    // tab can't cause a big jump
+                                                    // once it resumes
     lastTime = timestamp;
 
     update(dt);
